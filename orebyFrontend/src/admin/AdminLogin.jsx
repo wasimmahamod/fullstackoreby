@@ -3,11 +3,17 @@ import Image from "../component/Image";
 import axios from "axios";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Logo from "../../public/images/logo.png";
+import { useDispatch } from "react-redux";
+import { userLoginInfo } from "../slices/userSlice";
 
 const AdminLogin = () => {
+  let navigate = useNavigate();
+  let dispatch = useDispatch();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
+  let [error, setError] = useState("");
 
   let handleEmail = (e) => {
     setEmail(e.target.value);
@@ -27,6 +33,8 @@ const AdminLogin = () => {
       })
       .then((data) => {
         if (data.data.user.role == "admin") {
+          dispatch(userLoginInfo(data.data.user));
+          localStorage.setItem("userInfo", JSON.stringify(data.data.user));
           toast.success(data.data.success, {
             position: "top-center",
             autoClose: 1500,
@@ -38,6 +46,7 @@ const AdminLogin = () => {
             theme: "light",
             transition: Bounce,
           });
+          navigate("/admin");
         } else {
           toast.error("Only admin access this dashboard", {
             position: "top-center",
@@ -54,6 +63,7 @@ const AdminLogin = () => {
       })
       .catch((err) => {
         console.log(err);
+        setError(err.response.data.error);
         toast.error(err.response.data.error, {
           position: "top-center",
           autoClose: 1500,
@@ -87,7 +97,7 @@ const AdminLogin = () => {
           href="#"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
         >
-          <Image src="images/logo.png" />
+          <Image src={Logo} />
         </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -129,6 +139,17 @@ const AdminLogin = () => {
                   required=""
                 />
               </div>
+              {error && (
+                <div role="alert">
+                  <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                    Danger
+                  </div>
+                  <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+                    <p>{error}</p>
+                  </div>
+                </div>
+              )}
+
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="ml-3 text-sm"></div>

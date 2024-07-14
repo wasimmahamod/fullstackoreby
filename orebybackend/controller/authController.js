@@ -150,11 +150,34 @@ async function ChangepasswordController(req, res) {
     return res.status(404).send({ error });
   }
 }
+async function AlluserController(req, res) {
+  try {
+    let users = await userSchema.find({});
+    res.send(users);
+  } catch (error) {
+    return res.status(404).send({ error: error });
+  }
+}
+async function UpdateUserController(req, res) {
+  let { email, name } = req.body;
 
+  try {
+    let user = await userSchema.findOneAndUpdate(
+      { email },
+      { name: name },
+      { new: true }
+    );
+    res.send(user);
+  } catch (error) {
+    return res.status(404).send({ error: error });
+  }
+}
 module.exports = {
   RegistrationController,
   LoginController,
   OtpverifyController,
   ForgetPasswordController,
   ChangepasswordController,
+  AlluserController,
+  UpdateUserController,
 };

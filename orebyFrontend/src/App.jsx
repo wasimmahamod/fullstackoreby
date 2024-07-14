@@ -14,6 +14,14 @@ import AdminLogin from "./admin/AdminLogin";
 import Admin from "./admin/Admin";
 import Forgetpassword from "./pages/Forgetpassword";
 import Changepassword from "./pages/Changepassword";
+import Alluser from "./admin/Alluser";
+import UpdateUser from "./admin/UpdateUser";
+import Addproduct from "./admin/Addproduct";
+import Allproduct from "./admin/Allproduct";
+import UpdateProduct from "./admin/UpdateProduct";
+import Allcategory from "./admin/Allcategory";
+import AddCategory from "./admin/AddCategory";
+import UpdateCategory from "./admin/UpdateCategory";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,10 +35,17 @@ const router = createBrowserRouter(
           element={<Changepassword />}
         ></Route>
       </Route>
-
+      <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Admin />} />
-        <Route path="login" element={<AdminLogin />} />
+        <Route path="alluser" element={<Alluser />} />
+        <Route path="updateuser" element={<UpdateUser />} />
+        <Route path="allproduct" element={<Allproduct />} />
+        <Route path="addproduct" element={<Addproduct />} />
+        <Route path="updateproduct" element={<UpdateProduct />} />
+        <Route path="allcategory" element={<Allcategory />} />
+        <Route path="addcategory" element={<AddCategory />} />
+        <Route path="updatecategory" element={<UpdateCategory />} />
       </Route>
     </Route>
   )
