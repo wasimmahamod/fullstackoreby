@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Alluser = () => {
+
   let [allUser, setAllUser] = useState([]);
   function Alluser() {
     axios.get("http://localhost:3000/api/v1/auth/alluser").then((data) => {

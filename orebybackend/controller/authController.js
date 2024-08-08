@@ -159,15 +159,25 @@ async function AlluserController(req, res) {
   }
 }
 async function UpdateUserController(req, res) {
-  let { email, name } = req.body;
+  let { email, name, role } = req.body;
 
   try {
-    let user = await userSchema.findOneAndUpdate(
-      { email },
-      { name: name },
-      { new: true }
-    );
-    res.send(user);
+    if (role) {
+      let user = await userSchema.findOneAndUpdate(
+        { email },
+        { role: role },
+        { new: true }
+      );
+      res.send(user);
+    }
+    if (name) {
+      let user = await userSchema.findOneAndUpdate(
+        { email },
+        { name: name },
+        { new: true }
+      );
+      res.send(user);
+    }
   } catch (error) {
     return res.status(404).send({ error: error });
   }

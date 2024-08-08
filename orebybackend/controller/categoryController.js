@@ -24,19 +24,31 @@ async function createcategoryController(req, res) {
 }
 
 async function categoryapproveController(req, res) {
-  let { email, category } = req.body;
+  let { email, category, isActive, userEmail } = req.body;
 
   try {
-    let user = await userSchema.findOne({ email });
+    let user = await userSchema.findOne({ email: userEmail });
+    let cActive = Boolean(isActive);
 
     if (user) {
       if (user.role == "admin") {
-        let categorydata = await categorySchema.findOneAndUpdate(
-          { _id: category },
-          { isActive: true },
-          { new: true }
-        );
-        res.status(201).send({ success: "Category approved", categorydata });
+        if (Boolean(isActive)) {
+          let categorydata = await categorySchema.findOneAndUpdate(
+            { _id: category },
+            { isActive: true },
+            { new: true }
+          );
+          res.status(201).send({ success: "Category approved", categorydata });
+        } else {
+          let categorydata = await categorySchema.findOneAndUpdate(
+            { _id: category },
+            { isActive: false },
+            { new: true }
+          );
+          res
+            .status(201)
+            .send({ success: "Category not approved", categorydata });
+        }
       } else {
         return res
           .status(404)

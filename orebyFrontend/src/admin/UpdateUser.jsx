@@ -32,6 +32,17 @@ const UpdateUser = () => {
         setUpdateNameModal(false);
       });
   };
+
+  let handleRoleChange = (cvalue, item) => {
+    axios
+      .post("http://localhost:3000/api/v1/auth/updateuser", {
+        email: item.email,
+        role: cvalue.target.value,
+      })
+      .then(() => {
+        setUpdateNameModal(false);
+      });
+  };
   return (
     <div className="w-full">
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -46,6 +57,9 @@ const UpdateUser = () => {
               </th>
               <th scope="col" className="px-6 py-3 text-xl">
                 Role
+              </th>
+              <th scope="col" className="px-6 py-3 text-xl">
+                Edit Role
               </th>
             </tr>
           </thead>
@@ -65,7 +79,18 @@ const UpdateUser = () => {
                   </span>
                 </th>
                 <td className="px-6 py-4">{item.email}</td>
-                <td className="px-6 py-4">{item.role}</td>
+                <td className="px-6 py-4">{item.role} </td>
+                <td className="px-6 py-4">
+                  <select
+                    onChange={(e) => handleRoleChange(e, item)}
+                    id="countries"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[150px] p-2.5 "
+                  >
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                    <option value="merchent">Merchent</option>
+                  </select>
+                </td>
               </tr>
             </tbody>
           ))}
