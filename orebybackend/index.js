@@ -8,6 +8,8 @@ dbConfig();
 app.use(cors());
 const routes = require("./routes");
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("uploads"));
 app.use(routes);
 app.use((err, req, res, next) => {
   console.error(err.stack);

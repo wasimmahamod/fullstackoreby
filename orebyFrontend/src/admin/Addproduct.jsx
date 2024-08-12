@@ -4,6 +4,7 @@ import "react-quill/dist/quill.snow.css";
 
 const Addproduct = () => {
   const [value, setValue] = useState("");
+  let [imageUrl, setImageUrl] = useState(null);
   console.log(value);
   return (
     <div>
@@ -22,25 +23,65 @@ const Addproduct = () => {
             type="text"
             id="first_name"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[500px] p-2.5"
-            placeholder="Category Name"
+            placeholder="Product Name"
             required=""
           />
         </div>
-        <div className="mt-3">
-          <label
-            htmlFor="first_name"
-            className="block mb-2 text-sm font-medium "
-          >
+        <div>
+          <label className="block mb-2 text-sm font-medium  mt-5">
             Product Description
           </label>
-          <textarea
-            type="text"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[500px] p-2.5 h-[300px] "
-            placeholder="Category Description"
-            required=""
-          />
+          <ReactQuill theme="snow" value={value} onChange={setValue} />
         </div>
-        <ReactQuill theme="snow" value={value} onChange={setValue} />
+        <div>
+          <label className="block mb-2 text-sm font-medium  mt-5">
+            Product Image
+          </label>
+          <input
+            onChange={(e) => setImageUrl(e.target.files[0])}
+            className="block mt-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 "
+            id="file_input"
+            type="file"
+          />
+          {imageUrl && (
+            <img
+              className="w-[200px] h-[100px] mt-2 object-cover"
+              src={URL.createObjectURL(imageUrl)}
+              alt=""
+            />
+          )}
+        </div>
+
+        <div>
+          <label className="block mb-2 text-sm font-medium  mt-5">
+            Product Category
+          </label>
+          <select className="w-full border py-2 px-5">
+            <option value="">Desktop</option>
+            <option value="">Laptop</option>
+          </select>
+        </div>
+
+        <div className=" flex">
+          <div>
+            <label className="block mb-2 text-sm font-medium  mt-5">
+              Product Selling Price
+            </label>
+            <input
+              className=" border border-gray-500 px-3 py-2"
+              type="number"
+            />
+          </div>
+          <div>
+            <label className="block mb-2 text-sm font-medium  mt-5">
+              Product Price
+            </label>
+            <input
+              className=" border border-gray-500 px-3 py-2"
+              type="number"
+            />
+          </div>
+        </div>
         <button
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-4"
