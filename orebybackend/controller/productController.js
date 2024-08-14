@@ -3,8 +3,9 @@ const productSchema = require("../model/productSchema");
 async function createproductController(req, res) {
   //   let { name, description, image, sellingprice, price, category, ownerId } =
   //     req.body;
+  console.log(req.body);
+  res.send(req.body);
 
-  console.log(req.body.name);
   return;
   try {
     let product = new productSchema({

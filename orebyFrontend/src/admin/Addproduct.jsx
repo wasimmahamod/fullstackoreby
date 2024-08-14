@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -6,6 +7,16 @@ const Addproduct = () => {
   const [value, setValue] = useState("");
   let [imageUrl, setImageUrl] = useState(null);
   console.log(value);
+
+  let handlesubmit = () => {
+    let formdata = new FormData();
+    formdata.append("name", "wasim");
+    axios.post("http://localhost:5000/", formdata, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
   return (
     <div>
       <div>
@@ -83,6 +94,7 @@ const Addproduct = () => {
           </div>
         </div>
         <button
+          onClick={handlesubmit}
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-4"
         >
