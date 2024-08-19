@@ -4,18 +4,26 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const Addproduct = () => {
-  const [value, setValue] = useState("");
+  const [name, setName] = useState("");
+  const [descrption, setDescription] = useState("");
+
   let [imageUrl, setImageUrl] = useState(null);
-  console.log(value);
 
   let handlesubmit = () => {
-    let formdata = new FormData();
-    formdata.append("name", "wasim");
-    axios.post("http://localhost:5000/", formdata, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    console.log(name, descrption, imageUrl);
+    let formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", descrption);
+    formData.append("image", imageUrl);
+
+    axios
+      .post("http://localhost:3000/api/v1/product/createproduct", formData)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div>
@@ -31,6 +39,7 @@ const Addproduct = () => {
             Product Name
           </label>
           <input
+            onChange={(e) => setName(e.target.value)}
             type="text"
             id="first_name"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[500px] p-2.5"
@@ -42,7 +51,11 @@ const Addproduct = () => {
           <label className="block mb-2 text-sm font-medium  mt-5">
             Product Description
           </label>
-          <ReactQuill theme="snow" value={value} onChange={setValue} />
+          <ReactQuill
+            theme="snow"
+            value={descrption}
+            onChange={setDescription}
+          />
         </div>
         <div>
           <label className="block mb-2 text-sm font-medium  mt-5">

@@ -4,6 +4,7 @@ async function createproductController(req, res) {
   //   let { name, description, image, sellingprice, price, category, ownerId } =
   //     req.body;
   console.log(req.body);
+  console.log(req.file);
   res.send(req.body);
 
   return;
