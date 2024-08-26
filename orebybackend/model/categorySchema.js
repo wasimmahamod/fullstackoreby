@@ -9,6 +9,12 @@ const categorySchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  product: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Product",
+    },
+  ],
   isActive: {
     type: Boolean,
     default: false,

@@ -26,4 +26,14 @@ async function storeController(req, res) {
   }
 }
 
-module.exports = storeController;
+async function getAllstoreController(req, res) {
+  try {
+    let allstore = await storeSchema.find({});
+
+    res.status(200).send({ message: "success", allstore });
+  } catch (error) {
+    res.status(404).send({ error });
+  }
+}
+
+module.exports = { storeController, getAllstoreController };

@@ -32,7 +32,7 @@ const Product = ({ pimage, isNew, pInfo }) => {
 
       <Flex className=" justify-between mt-6">
         <h2 className=" text-xl font-bold text-primary ">
-          {pInfo ? pInfo.title : "Basic Crew Neck Tee"}
+          {pInfo ? pInfo.name : "Basic Crew Neck Tee"}
         </h2>
         <h4 className=" text-base font-normal  text-secandary leading-[30px] ">
           ${pInfo ? pInfo.price : "0"}

@@ -1,23 +1,41 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
+import { useSelector } from "react-redux";
+
 const Addproduct = () => {
+  let data = useSelector((state) => state.userInfo.value);
+
   const [name, setName] = useState("");
   const [descrption, setDescription] = useState("");
 
   let [imageUrl, setImageUrl] = useState(null);
+  let [sellingprice, setSellingprice] = useState(null);
+  let [price, setprice] = useState(null);
+  let [category, setCategory] = useState("");
+  let [allCategory, setAllCategory] = useState([]);
+  let [allStore, setAllStore] = useState([]);
+  let [store, setStore] = useState(null);
 
   let handlesubmit = () => {
-    console.log(name, descrption, imageUrl);
     let formData = new FormData();
     formData.append("name", name);
     formData.append("description", descrption);
     formData.append("image", imageUrl);
+    formData.append("sellingprice", sellingprice);
+    formData.append("price", price);
+    formData.append("category", category);
+    formData.append("storeid", store);
+    formData.append("ownerId", data._id);
 
     axios
-      .post("http://localhost:3000/api/v1/product/createproduct", formData)
+      .post("http://localhost:3000/api/v1/product/createproduct", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((data) => {
         console.log(data);
       })
@@ -25,6 +43,31 @@ const Addproduct = () => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    function getCategory() {
+      axios
+        .get("http://localhost:3000/api/v1/category/allcategory")
+        .then((data) => {
+          setAllCategory(data.data.category);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    getCategory();
+    function getStore() {
+      axios
+        .get("http://localhost:3000/api/v1/store/allstore")
+        .then((data) => {
+          setAllStore(data.data.allstore);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    getStore();
+  }, []);
   return (
     <div>
       <div>
@@ -80,9 +123,29 @@ const Addproduct = () => {
           <label className="block mb-2 text-sm font-medium  mt-5">
             Product Category
           </label>
-          <select className="w-full border py-2 px-5">
-            <option value="">Desktop</option>
-            <option value="">Laptop</option>
+          <select
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full border py-2 px-5"
+          >
+            {allCategory.map((item) => (
+              <option key={item._id} value={item._id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block mb-2 text-sm font-medium  mt-5">Store</label>
+          <select
+            onChange={(e) => setStore(e.target.value)}
+            className="w-full border py-2 px-5"
+          >
+            {allStore.map((item) => (
+              <option key={item._id} value={item._id}>
+                {item.name}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -92,6 +155,7 @@ const Addproduct = () => {
               Product Selling Price
             </label>
             <input
+              onChange={(e) => setSellingprice(e.target.value)}
               className=" border border-gray-500 px-3 py-2"
               type="number"
             />
@@ -101,6 +165,7 @@ const Addproduct = () => {
               Product Price
             </label>
             <input
+              onChange={(e) => setprice(e.target.value)}
               className=" border border-gray-500 px-3 py-2"
               type="number"
             />

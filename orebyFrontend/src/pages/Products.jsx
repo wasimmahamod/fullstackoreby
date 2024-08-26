@@ -14,9 +14,11 @@ const Products = ({ title }) => {
   let [products, setProudcts] = useState([]);
   useEffect(() => {
     function getProducts() {
-      axios.get("https://dummyjson.com/products").then((data) => {
-        setProudcts(data.data.products);
-      });
+      axios
+        .get("http://localhost:3000/api/v1/product/allproduct")
+        .then((data) => {
+          setProudcts(data.data.allproduct);
+        });
     }
 
     getProducts();

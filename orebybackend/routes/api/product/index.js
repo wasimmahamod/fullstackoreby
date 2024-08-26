@@ -1,5 +1,8 @@
 const express = require("express");
-const createproductController = require("../../../controller/productController");
+const {
+  createproductController,
+  getAllProductController,
+} = require("../../../controller/productController");
 const cloudinary = require("cloudinary").v2;
 const router = express.Router();
 const path = require("path");
@@ -24,5 +27,6 @@ const upload = multer({
 });
 
 router.post("/createproduct", upload.single("image"), createproductController);
+router.get("/allproduct", getAllProductController);
 
 module.exports = router;
