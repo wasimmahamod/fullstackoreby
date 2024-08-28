@@ -19,6 +19,9 @@ const categorySchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  discount: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Category", categorySchema);

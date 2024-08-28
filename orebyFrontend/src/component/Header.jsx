@@ -14,11 +14,13 @@ import Image from "./Image";
 import { IoCloseSharp } from "react-icons/io5";
 import { RiTriangleFill } from "react-icons/ri";
 import { VscTriangleUp } from "react-icons/vsc";
+import axios from "axios";
 
 const Header = () => {
   let [categoryModal, setCategoryModal] = useState(false);
   let [userModal, setUserModal] = useState(false);
   let [cartModal, setcartModal] = useState(false);
+  let [allcategory, setAllcategory] = useState([]);
 
   let categoryRef = useRef();
   let userRef = useRef();
@@ -44,6 +46,20 @@ const Header = () => {
     });
   }, [categoryModal]);
 
+  useEffect(() => {
+    let getCategory = () => {
+      axios
+        .get("http://localhost:3000/api/v1/category/allcategory")
+        .then((data) => {
+          setAllcategory(data.data.category);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getCategory();
+  }, []);
+
   return (
     <header className=" bg-headerbg py-6">
       <Container>
@@ -56,36 +72,13 @@ const Header = () => {
             <div>
               {categoryModal && (
                 <List className=" absolute z-50 top-10 left-0  w-[263px] bg-primary ">
-                  <ListItem className="border-[#2D2D2D]  border-b ">
-                    <Link className=" text-sm font-normal text-white py-4 pl-5 inline-block hover:font-bold hover:ml-3 duration-200   ">
-                      Accesories
-                    </Link>
-                  </ListItem>
-                  <ListItem className="border-[#2D2D2D]  border-b ">
-                    <Link className=" text-sm font-normal text-white py-4 pl-5 inline-block hover:font-bold hover:ml-3 duration-200  ">
-                      Furniture
-                    </Link>
-                  </ListItem>
-                  <ListItem className="border-[#2D2D2D]  border-b ">
-                    <Link className=" text-sm font-normal text-white py-4 pl-5 inline-block hover:font-bold hover:ml-3 duration-200  ">
-                      Electronics
-                    </Link>
-                  </ListItem>
-                  <ListItem className="border-[#2D2D2D]  border-b ">
-                    <Link className=" text-sm font-normal text-white py-4 pl-5 inline-block hover:font-bold hover:ml-3 duration-200  ">
-                      Clothes
-                    </Link>
-                  </ListItem>
-                  <ListItem className="border-[#2D2D2D]  border-b ">
-                    <Link className=" text-sm font-normal text-white py-4 pl-5 inline-block hover:font-bold hover:ml-3 duration-200  ">
-                      Bags
-                    </Link>
-                  </ListItem>
-                  <ListItem className="border-[#2D2D2D]  border-b ">
-                    <Link className=" text-sm font-normal text-white py-4 pl-5 inline-block hover:font-bold hover:ml-3 duration-200  ">
-                      Home appliances
-                    </Link>
-                  </ListItem>
+                  {allcategory.map((item) => (
+                    <ListItem className="border-[#2D2D2D]  border-b ">
+                      <Link className=" text-sm font-normal text-white py-4 pl-5 inline-block hover:font-bold hover:ml-3 duration-200   ">
+                        {item.name}
+                      </Link>
+                    </ListItem>
+                  ))}
                 </List>
               )}
             </div>

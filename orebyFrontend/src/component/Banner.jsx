@@ -1,10 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "./Image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Banner = () => {
+  let [bannerImage, setBannerImage] = useState([]);
+  useEffect(() => {
+    let getBanner = () => {
+      axios
+        .get("http://localhost:3000/api/v1/banner/bannerImages")
+        .then((data) => {
+          setBannerImage(data.data.images);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getBanner();
+  }, []);
+
+  console.log(bannerImage);
   let [active, setActive] = useState(0);
   var settings = {
     dots: true,
@@ -131,23 +148,9 @@ const Banner = () => {
   return (
     <div>
       <Slider {...settings}>
-        <Image
-          className="w-full"
-          src="images/bannerimage.png"
-          alt="bannerImage"
-        />
-
-        <Image
-          className="w-full"
-          src="images/bannerimage.png"
-          alt="bannerImage"
-        />
-
-        <Image
-          className="w-full"
-          src="images/bannerimage.png"
-          alt="bannerImage"
-        />
+        {bannerImage.map((item) => (
+          <Image className="w-full" src={item.image} alt="bannerImage" />
+        ))}
       </Slider>
     </div>
   );
