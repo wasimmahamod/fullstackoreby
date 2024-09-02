@@ -8,16 +8,19 @@ import { FaListUl } from "react-icons/fa6";
 import Product from "../component/Product";
 import axios from "axios";
 import Pagination from "../component/Pagination";
+import Loading from "../component/Loading";
 
 const Products = ({ title }) => {
   let [perpage, setParPage] = useState(6);
   let [products, setProudcts] = useState([]);
+  let [loading, setLoading] = useState(true);
   useEffect(() => {
     function getProducts() {
       axios
         .get("http://localhost:3000/api/v1/product/allproduct")
         .then((data) => {
           setProudcts(data.data.allproduct);
+          setLoading(false);
         });
     }
 
@@ -92,7 +95,21 @@ const Products = ({ title }) => {
             </div>
             {/* ====================products start  =============  */}
             <section className=" mt-16">
-              <Pagination itemsPerPage={perpage} proudcts={products} />
+              {loading ? (
+                <>
+                  <Flex className=" justify-between">
+                    <Loading />
+                    <Loading />
+                    <Loading />
+                  </Flex>
+                </>
+              ) : (
+                <Pagination
+                  itemsPerPage={perpage}
+                  loading={loading}
+                  proudcts={products}
+                />
+              )}
             </section>
             {/* ====================products end  =============  */}
           </div>

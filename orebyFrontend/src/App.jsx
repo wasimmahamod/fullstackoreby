@@ -22,6 +22,8 @@ import UpdateProduct from "./admin/UpdateProduct";
 import Allcategory from "./admin/Allcategory";
 import AddCategory from "./admin/AddCategory";
 import UpdateCategory from "./admin/UpdateCategory";
+import ProductsDetails from "./pages/ProductsDetails";
+import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +32,7 @@ const router = createBrowserRouter(
         <Route index element={<Home title="Home" />}></Route>
         <Route path="/products" element={<Products title="Shop" />}></Route>
         <Route path="/forgetpassword" element={<Forgetpassword />}></Route>
+        <Route path="/productdetails/:id" element={<ProductsDetails />}></Route>
         <Route
           path="/changepassword/:token"
           element={<Changepassword />}
@@ -47,6 +50,7 @@ const router = createBrowserRouter(
         <Route path="addcategory" element={<AddCategory />} />
         <Route path="updatecategory" element={<UpdateCategory />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );

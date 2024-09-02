@@ -12,7 +12,6 @@ const Pagination = ({ itemsPerPage, proudcts }) => {
         {currentItems &&
           currentItems.map((item) => (
             <div>
-              {console.log(item)}
               <Product pInfo={item} pimage={item.image} isNew={true} />
             </div>
           ))}

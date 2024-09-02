@@ -54,4 +54,19 @@ async function getAllProductController(req, res) {
   }
 }
 
-module.exports = { createproductController, getAllProductController };
+async function singleProductController(req, res) {
+  let { id } = req.params;
+
+  try {
+    let findproduct = await productSchema.findOne({ _id: id });
+    res.status(200).send({ product: findproduct });
+  } catch (error) {
+    res.status(404).send({ error });
+  }
+}
+
+module.exports = {
+  createproductController,
+  getAllProductController,
+  singleProductController,
+};
