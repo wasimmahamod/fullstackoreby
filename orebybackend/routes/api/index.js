@@ -6,11 +6,15 @@ const product = require("./product");
 const store = require("./store");
 const discount = require("./discount");
 const banner = require("./banner");
+const review = require("./review");
+const cart = require("./cart");
 router.use("/auth", auth);
 router.use("/category", category);
 router.use("/product", product);
 router.use("/store", store);
 router.use("/discount", discount);
 router.use("/banner", banner);
+router.use("/review", review);
+router.use("/cart", cart);
 
 module.exports = router;

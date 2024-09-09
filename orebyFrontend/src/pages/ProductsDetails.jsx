@@ -21,6 +21,8 @@ const ProductsDetails = () => {
     getSingleProduct();
   }, []);
 
+  console.log(product);
+
   return (
     <section className="py-8 bg-white md:py-16  antialiased">
       <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
@@ -142,7 +144,11 @@ const ProductsDetails = () => {
               </a>
             </div>
             <hr className="my-6 md:my-8 border-gray-200 border-gray-800" />
-            {product.description}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: product.description,
+              }}
+            ></div>
           </div>
         </div>
       </div>
