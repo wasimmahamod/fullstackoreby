@@ -6,7 +6,7 @@ const {
 const router = express.Router();
 
 router.post("/addcart", addCartController);
-router.get("/getcart", getCartController);
+router.get("/getcart/:id", getCartController);
 router.post("/testcart", (req, res) => {
   res.send(req.query);
 });

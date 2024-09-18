@@ -27,8 +27,10 @@ async function addCartController(req, res) {
   }
 }
 async function getCartController(req, res) {
+  let { id } = req.params;
+
   try {
-    let getcart = await cartSchema.find({}).populate("productid");
+    let getcart = await cartSchema.find({ ownerId: id }).populate("productid");
     res.status(200).send(getcart);
   } catch (error) {
     res.status(400).send({ error });

@@ -25,6 +25,7 @@ import UpdateCategory from "./admin/UpdateCategory";
 import ProductsDetails from "./pages/ProductsDetails";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
         <Route path="/forgetpassword" element={<Forgetpassword />}></Route>
         <Route path="/productdetails/:id" element={<ProductsDetails />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
+        <Route path="/checkout" element={<Checkout />}></Route>
         <Route
           path="/changepassword/:token"
           element={<Changepassword />}

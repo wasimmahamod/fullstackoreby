@@ -46,7 +46,7 @@ async function createproductController(req, res) {
 
 async function getAllProductController(req, res) {
   try {
-    let allproduct = await productSchema.find({});
+    let allproduct = await productSchema.find({}).sort("price");
 
     res.status(200).send({ message: "success", allproduct });
   } catch (error) {
