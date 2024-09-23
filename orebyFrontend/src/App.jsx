@@ -4,7 +4,6 @@ import {
   createBrowserRouter,
   Route,
   RouterProvider,
-  Router,
 } from "react-router-dom";
 import Rootlayout from "./component/layout/Rootlayout";
 import Home from "./pages/Home";
@@ -26,10 +25,12 @@ import ProductsDetails from "./pages/ProductsDetails";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
+      <Route path="/success" element={<PaymentSuccess />}></Route>
       <Route path="/" element={<Rootlayout />}>
         <Route index element={<Home title="Home" />}></Route>
         <Route path="/products" element={<Products title="Shop" />}></Route>

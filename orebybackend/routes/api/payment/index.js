@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const SSLCommerzPayment = require("sslcommerz-lts");
-const store_id = "oreby66e17a4692804";
-const store_passwd = "oreby66e17a4692804@ssl";
+const store_id = "orebi66eada0b38adb";
+const store_passwd = "orebi66eada0b38adb@ssl";
 const is_live = false; //true for live, false for sandbox
 
-router.get("/init", (req, res) => {
+router.post("/init", (req, res) => {
   const data = {
     total_amount: 100,
     currency: "BDT",
     tran_id: "REF123", // use unique tran_id for each api call
-    success_url: "http://localhost:3030/success",
-    fail_url: "http://localhost:3030/fail",
+    success_url: `http://localhost:3000/api/v1/payment/success/234234`,
+    fail_url: "http://localhost:5173/fail",
     cancel_url: "http://localhost:3030/cancel",
     ipn_url: "http://localhost:3030/ipn",
     shipping_method: "Courier",
@@ -43,9 +43,10 @@ router.get("/init", (req, res) => {
     const getPageurlUid = GatewayPageURL.split("/");
     const id = getPageurlUid[getPageurlUid.length - 1];
     res.status(200).send(id);
-    console.log(apiResponse);
-    console.log("Redirecting to: ", id);
   });
+});
+router.post("/success/:tran_id", async (req, res) => {
+  res.send(req.params.tran_id);
 });
 
 module.exports = router;

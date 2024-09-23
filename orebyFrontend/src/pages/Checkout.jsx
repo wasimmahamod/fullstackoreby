@@ -4,12 +4,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   let { state } = useLocation();
-  let navigate = useNavigate();
 
   let handlePayment = () => {
     console.log("totalprice", state.totalprice);
     axios
-      .get("http://localhost:3000/api/v1/payment/init")
+      .post("http://localhost:3000/api/v1/payment/init")
       .then((data) => {
         console.log(data);
         window.location.replace(
